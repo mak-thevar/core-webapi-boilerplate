@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CoreWebApiBoilerPlate</name>
+    </assembly>
+    <members>
+        <member name="T:CoreWebApiBoilerPlate.Infrastructure.Data.MockData.PasswordConverter">
+            <summary>
+            Custom json converter just to hash the password from the JSON data
+            </summary>
+        </member>
+    </members>
+</doc>
