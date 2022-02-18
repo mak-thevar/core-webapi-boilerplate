@@ -43,6 +43,7 @@ namespace CoreWebApiBoilerPlate
             var dbc = services.AddDbContext<DefaultContext>(options => {
                 options.UseSqlite(@"DataSource=corewebapi.db",opt=>opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
                 options.EnableSensitiveDataLogging();
+                
             });
             services.AddControllers();
             services.AddInfrastructure();
@@ -148,6 +149,14 @@ namespace CoreWebApiBoilerPlate
             {
                 endpoints.MapControllers();
             });
+
+            //Automigration, Comment the below 4 lines to disable auto migration
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<DefaultContext>();
+                context.Database.Migrate();
+            }
+
         }
     }
 }
