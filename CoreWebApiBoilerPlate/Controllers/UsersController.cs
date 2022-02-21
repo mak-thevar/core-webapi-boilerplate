@@ -8,25 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using HelpDeskBBQN.Infrastructure.Data;
 using CoreWebApiBoilerPlate.Controllers.Base;
 using CoreWebApiBoilerPlate.Entity;
+using Microsoft.AspNetCore.Authorization;
+using CoreWebApiBoilerPlate.Infrastructure.Data.Repository.Interfaces;
+using CoreWebApiBoilerPlate.Models;
+using AutoMapper;
 
 namespace CoreWebApiBoilerPlate.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ApiControllerBase
     {
-        private readonly DefaultContext _context;
-
-        public UsersController(DefaultContext context)
+        private readonly IRepositoryWrapper _context;
+        private readonly IMapper mapper;
+        public UsersController(IRepositoryWrapper context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var result =  await _context.Users.ToListAsync();
+            var result =  await _context.UserRepository.GetAllAsync();
             if (result.Any())
                 return await CreateSuccessResponse(result);
             return await DataNotFound();
@@ -36,7 +42,7 @@ namespace CoreWebApiBoilerPlate.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.UserRepository.GetByIdAsync(id);
 
             if (user == null)
             {
@@ -54,61 +60,25 @@ namespace CoreWebApiBoilerPlate.Controllers
         {
             if (id != user.UserId)
             {
-                return BadRequest();
+                return await CreateErrorResponse(System.Net.HttpStatusCode.BadRequest, new Models.Errors("Error","UserId not found"));
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return await DataNotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _context.UserRepository.UpdateAsync(user);
+            await _context.Save();
             return await CreateSuccessResponse("User updated successfully");
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Register a new User
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> PostUser(User user)
+        [AllowAnonymous]
+        public async Task<IActionResult> PostUser(UserRequestModel userReqModel)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
+            var user = mapper.Map<User>(userReqModel);
+            var result = await _context.UserRepository.AddAsync(user);
+            await _context.Save();
             return await CreateSuccessResponse(user);
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return await DataNotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return await CreateSuccessResponse($"User {user.Username} has been deleted successfully.");
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.UserId == id);
         }
     }
 }
