@@ -7,13 +7,13 @@
 A [.net core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
 
 ## 📋 Table of Contents 
-* [Getting Started](#getting-started)
-* [Installation](#installation)
-* [Features](#features)
-* [Contributing](#contributing)
-* [Screenshots](#Screenshots)
-* [License](#license)
-* [Contact](#contact)
+* [Getting Started](#-getting-started)
+* [Installation](#-installation)
+* [Features](#-features)
+* [Contributing](#-contributing)
+* [Screenshots](#-screenshots)
+* [License](#-license)
+* [Contact](#-contact)
 
 
 
@@ -77,12 +77,12 @@ Contributions are what make the open source community such an amazing place to b
 
 
 <!-- LICENSE -->
-## License
+## 🎫 License
 
 Distributed under the MIT License. See [`LICENSE`](https://github.com/mak-thevar/core-webapi-boilerplate/blob/master/LICENSE) for more information.
 
 <!-- CONTACT -->
-## Contact
+## 📱 Contact
 
 Name - [Muthukumar Thevar](#) - mak.thevar@outlook.com
 
