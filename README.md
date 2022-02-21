@@ -1,4 +1,4 @@
-![Build Status](https://github.com/mak-thevar/core-webapi-boilerplate/workflows/dotnet.yml/badge.svg)
+![Build Status](https://github.com/mak-thevar/core-webapi-boilerplate/actions/workflows/dotnet.yml/badge.svg)
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
