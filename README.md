@@ -58,12 +58,28 @@ Contributions are what make the open source community such an amazing place to b
 
 
 ## 📸 Screenshots
+| ![login_screen](https://user-images.githubusercontent.com/40656217/154900109-e8129bfb-b9aa-4091-afc8-621eefe943b8.gif) | 
+|:--:| 
+| *Login Using Insomnia/PostMan* |
+
+| ![swagger_doc](https://user-images.githubusercontent.com/40656217/154900119-48cdd956-efb3-4b3e-bade-c68566a87a55.gif) | 
+|:--:| 
+| *Swagger Documentation* |
+
+| ![RegisterUser](https://user-images.githubusercontent.com/40656217/154904538-959a585e-f1ab-4dbb-8d0b-46f7b4e0bcbd.gif) | 
+|:--:| 
+| *Register User API* |
+
+| ![swagger_login](https://user-images.githubusercontent.com/40656217/154900137-8146dd6e-862e-4b0f-ab42-77272959da84.gif) | 
+|:--:| 
+| *Login Using Swagger* |
+
 
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [`LICENSE`](https://github.com/mak-thevar/AdminLTEAspNetMVC/blob/master/LICENSE) for more information.
+Distributed under the MIT License. See [`LICENSE`](https://github.com/mak-thevar/core-webapi-boilerplate/blob/master/LICENSE) for more information.
 
 <!-- CONTACT -->
 ## Contact
