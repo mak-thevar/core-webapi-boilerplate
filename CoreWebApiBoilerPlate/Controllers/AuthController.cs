@@ -20,7 +20,15 @@ namespace CoreWebApiBoilerPlate.Controllers
         {
             this.jWTAuth = jWTAuth;
         }
+
+        /// <summary>
+        /// Generate JWT token by providing the appropriate login credentials.
+        /// </summary>
+        /// <param name="login">LoginModel</param>
+        /// <returns></returns>
         [HttpPost("login")]
+        [ProducesResponseType(200,Type = typeof(TokenResponseModel))]
+        [ProducesResponseType(400,Type = typeof(StatusCodeResult))]
         public async Task<IActionResult> Login(LoginModel login)
         {
             var user = await jWTAuth.Authenticate(login.UserName, login.Password);

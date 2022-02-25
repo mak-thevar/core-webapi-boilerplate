@@ -30,7 +30,10 @@ namespace CoreWebApiBoilerPlate.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/Posts
+        /// <summary>
+        /// Get the posts list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(DefaultResponseModel<IList<Post>>), 200)]
         [ProducesResponseType(typeof(DefaultResponseModel<string>), 404)]
@@ -42,7 +45,11 @@ namespace CoreWebApiBoilerPlate.Controllers
             return await CreateSuccessResponse(result.ToList());
         }
 
-        // GET: api/Posts/5
+        /// <summary>
+        /// Get the post by Id
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(DefaultResponseModel<Post>), 200)]
         [ProducesResponseType(typeof(DefaultResponseModel<string>), 404)]
@@ -58,9 +65,12 @@ namespace CoreWebApiBoilerPlate.Controllers
             return await CreateSuccessResponse(post);
         }
 
-        // PUT: api/Posts/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Update post by its Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Produces(typeof(DefaultResponseModel<string>))]
         public async Task<IActionResult> PutPost(int id, Post post)
@@ -90,9 +100,11 @@ namespace CoreWebApiBoilerPlate.Controllers
             return await CreateSuccessResponse("Updated successfully.", System.Net.HttpStatusCode.NoContent);
         }
 
-        // POST: api/Posts
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// Add a new post
+        /// </summary>
+        /// <param name="postRequestModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces(typeof(DefaultResponseModel<Post>))]
         public async Task<IActionResult> PostPost(PostRequestModel postRequestModel)
@@ -103,7 +115,11 @@ namespace CoreWebApiBoilerPlate.Controllers
             return await CreateSuccessResponse(result);
         }
 
-        // DELETE: api/Posts/5
+        /// <summary>
+        /// Delete the Post by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces(typeof(DefaultResponseModel<string>))]
         public async Task<IActionResult> DeletePost(int id)

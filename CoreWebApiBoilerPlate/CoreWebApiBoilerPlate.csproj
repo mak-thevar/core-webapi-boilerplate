@@ -9,10 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="backup\**" />
     <Compile Remove="Logs\**" />
+    <Content Remove="backup\**" />
     <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="backup\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <None Remove="backup\**" />
     <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="CoreWebApiBoilerPlate.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CoreWebApiBoilerPlate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
