@@ -4,7 +4,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 # CoreWebApi-BoilerPlate
-A [.net core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
+A [.net core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
 
 ## 📋 Table of Contents 
 * [Getting Started](#-getting-started)
@@ -44,7 +44,7 @@ git clone https://github.com/mak-thevar/core-webapi-boilerplate.git
 - [Swagger](https://swagger.io/) for API documentation has been added.
 - [Entityframework Core](https://docs.microsoft.com/en-us/ef/core/) has been configured for database communication. (_Currently have added SQLLite for sample DB_)
 - Follows [Repository pattern](https://deviq.com/repository-pattern/) for the database operations.
-- A Sample controller to Add Posts with Register user and Login User has been added.
+- A Sample controller to Add Todos with Register user and Login User has been added.
 
 ## 🔘 Contributing
 
