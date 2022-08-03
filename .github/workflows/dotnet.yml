@@ -32,4 +32,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "corewebapi-boiilerplate" #Must be unique in Heroku
           heroku_email: "mak.thevar@outlook.com"
-          buildpack: "heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack"
+          buildpack: "heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack#preview"
