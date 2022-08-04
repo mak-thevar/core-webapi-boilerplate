@@ -4,7 +4,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 # CoreWebApi-BoilerPlate
-A [.net core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
+A [.net core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
 
 ## 📋 Table of Contents 
 * [Getting Started](#-getting-started)
@@ -29,10 +29,53 @@ A [.net core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) based 
 git clone https://github.com/mak-thevar/core-webapi-boilerplate.git
 ```
 - Open the solution file 'CoreWebApiBoilerPlate.sln' directly in Visual Studio
-- The database is cofigured to use sqllite you can change it to appropriate sql like MSSQL or mysql, the settings can be found on the startup file in ConfigureServices method
+- The database is cofigured to use sqllite you can change it to appropriate sql like MSSQL or mysql, the settings can be found on the RegisterSqliteDatabaseContext method in *DataLayer\RegisterDBDependency.cs* file
   ```cs
-  options.UseSqlite(@"DataSource=corewebapi.db",opt=>opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+      services.AddDbContext<DefaultDBContext>(options =>
+      {
+          options.UseSqlite(connectionString, options =>
+          {
+              options.MigrationsAssembly(typeof(DefaultDBContext).Assembly.FullName);
+          });
+          options.EnableDetailedErrors();
+          options.EnableSensitiveDataLogging();
+      });
   ```
+- The initial seeding data can be found on *DataLayer\Context\SeedingData.cs file
+  
+     <details>
+  <summary>
+   <h4>Show Code</h4>
+  </summary>
+  <pre>
+  public static List<TodoStatus> GetTodoStatus()
+      {
+          return new List<TodoStatus>
+          {
+              new TodoStatus{ Id =1 , Description = "Todo", IsDefault = true},
+              new TodoStatus{ Id =2 , Description = "In Progress", IsDefault = true},
+              new TodoStatus {Id =3, Description = "Completed" , IsDefault  = true},
+          };
+      }
+
+      public static List<Role> GetRoles()
+      {
+          return new List<Role>
+           {
+               new Role{ Id =1 , Description = "Admin", IsActive = true, CreatedOn = DateTime.UtcNow}
+           };
+      }
+
+      public static List<User> GetUsers()
+      {
+          return new List<User>
+          {
+              new User{ Id =1 , CreatedOn = DateTime.UtcNow, EmailId = "mak.thevar@outlook.com", IsActive = true, Name = "mak thevar", RoleId =1, Username = "mak-thevar", Password = EasyEncryption.MD5.ComputeMD5Hash("12345678")},
+          };
+      }
+ </pre>
+</details>
+
 - Now Build the project and run, Initially for the very first time it will create the database and will execute the migration scripts automatically.
 
 
@@ -44,7 +87,7 @@ git clone https://github.com/mak-thevar/core-webapi-boilerplate.git
 - [Swagger](https://swagger.io/) for API documentation has been added.
 - [Entityframework Core](https://docs.microsoft.com/en-us/ef/core/) has been configured for database communication. (_Currently have added SQLLite for sample DB_)
 - Follows [Repository pattern](https://deviq.com/repository-pattern/) for the database operations.
-- A Sample controller to Add Posts with Register user and Login User has been added.
+- A Sample controller to Add Todos with Register user and Login User has been added.
 
 ## 🔘 Contributing
 
