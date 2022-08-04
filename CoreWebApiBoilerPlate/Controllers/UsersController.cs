@@ -26,6 +26,7 @@ namespace CoreWebApiBoilerPlate.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<List<UserResponseModel>>))]
+        [Authorize("Admin")]
         public async Task<IActionResult> Get()
         {
             var items = await repository.UserRepository.GetAllAsync();
@@ -50,10 +51,13 @@ namespace CoreWebApiBoilerPlate.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<string>))]
         public async Task<IActionResult> AddUser([FromBody] NewUserRequestModel model)
         {
             var user = mapper.Map<User>(model);
+            //Setting default Admin role for new user
+            user.RoleId = 2;
             var userCreated = await repository.UserRepository.AddAsync(user);
             await repository.SaveAsync();
             return CreateSuccessResponse($"User created successfully with Id {userCreated.Id}");

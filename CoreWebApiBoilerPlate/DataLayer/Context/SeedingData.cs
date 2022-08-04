@@ -18,7 +18,8 @@ namespace CoreWebApiBoilerPlate.DataLayer.Context
         {
             return new List<Role>
              {
-                 new Role{ Id =1 , Description = "Admin", IsActive = true, CreatedOn = DateTime.UtcNow}
+                 new Role{ Id =1 , Description = "Admin", IsActive = true, CreatedOn = DateTime.UtcNow},
+                 new Role{ Id =2 , Description = "Normal", IsActive=true, CreatedOn = DateTime.UtcNow},
              };
         }
 
