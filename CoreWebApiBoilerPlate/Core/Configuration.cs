@@ -17,6 +17,7 @@ namespace CoreWebApiBoilerPlate.Core
             builder.Services.AddAutoMapper(typeof(Program));
             var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? builder.Configuration["JWT:Key"];
             builder.Services.RegisterJWTAuthentication(jwtKey);
+            builder.Services.AddSwaggerGenWithJWTSecurity();
         }
 
         public static void RegisterProjectMiddleWares(this IApplicationBuilder builder)
