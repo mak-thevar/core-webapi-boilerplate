@@ -26,7 +26,7 @@ namespace CoreWebApiBoilerPlate.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<List<UserResponseModel>>))]
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             var items = await repository.UserRepository.GetAllAsync();
