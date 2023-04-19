@@ -8,7 +8,8 @@ A [.net core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) based 
 
 ## 📋 Table of Contents 
 * [Getting Started](#-getting-started)
-* [Installation](#-installation)
+* [File Structure](#%EF%B8%8F-file-structure)
+* [Installation](#installation)
 * [Features](#-features)
 * [Contributing](#-contributing)
 * [Screenshots](#-screenshots)
@@ -16,10 +17,92 @@ A [.net core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) based 
 * [Contact](#-contact)
 
 
-
 ## 🏁 Getting Started
 ### Prerequisites
 - [Visual Studio](https://visualstudio.microsoft.com/) OR [Visual Studio Code](https://code.visualstudio.com/)
+
+
+## 🗃️ File Structure
+
+```
+│   appsettings.Development.json
+│   appsettings.json
+│   CoreWebApiBoilerPlate.csproj
+│   CoreWebApiBoilerPlate.csproj.user
+│   Program.cs
+│
+├───BusinessLogicLayer
+│   │   PredicateBuilder.cs
+│   │
+│   ├───DTO
+│   │       ApiResponseModel.cs
+│   │       CommentRequestModel.cs
+│   │       CommentResponseModel.cs
+│   │       Constants.cs
+│   │       RoleRequestModel.cs
+│   │       RoleResponseModel.cs
+│   │       TodoRequestModel.cs
+│   │       TodoResponseModel.cs
+│   │       UserRequestModel.cs
+│   │       UserResponseModel.cs
+│   │
+│   └───Exceptions
+│           AppException.cs
+│
+├───Controllers
+│       ApiBaseController.cs
+│       AuthController.cs
+│       TodosController.cs
+│       UsersController.cs
+│
+├───DataAccessLayer
+│   ├───Context
+│   │       DefaultDBContext.cs
+│   │       SeedingData.cs
+│   │
+│   ├───Entities
+│   │   │   Comment.cs
+│   │   │   Role.cs
+│   │   │   Todo.cs
+│   │   │   TodoStatus.cs
+│   │   │   User.cs
+│   │   │
+│   │   └───Base
+│   │           EntityBase.cs
+│   │           IAuditedEntity.cs
+│   │           IStatusEntity.cs
+│   │
+│   └───Repository
+│       ├───Impl
+│       │       RepositoryBase.cs
+│       │       RepositoryWrapper.cs
+│       │       TodoRepository.cs
+│       │       UserRepository.cs
+│       │
+│       └───Interfaces
+│               IRepository.cs
+│               IRepositoryWrapper.cs
+│               ITodoRepository.cs
+│               IUserRepository.cs
+│
+├───Infrastructure
+│   │   AutoMapperProfile.cs
+│   │   Configuration.cs
+│   │   IdentityClientConfiguration.cs
+│   │   JWT.cs
+│   │   RegisterDBDependency.cs
+│   │   SwaggerGen.cs
+│   │
+│   └───Middlewares
+│           ExceptionHandlerMiddleWare.cs
+│
+├───Migrations
+│       20220716122039_Initial.cs
+│       20220716122039_Initial.Designer.cs
+│       20220804091809_AddingRole.cs
+│       20220804091809_AddingRole.Designer.cs
+│       DefaultDBContextModelSnapshot.cs
+```
 
 
 ## Installation
