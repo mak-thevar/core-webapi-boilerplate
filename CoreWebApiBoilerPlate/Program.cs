@@ -1,7 +1,6 @@
 using CoreWebApiBoilerPlate.Core;
 using CoreWebApiBoilerPlate.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

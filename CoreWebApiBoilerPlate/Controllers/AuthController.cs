@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using CoreWebApiBoilerPlate.BusinessLogic.Repository;
+using CoreWebApiBoilerPlate.BusinessLogicLayer.DTO;
 using CoreWebApiBoilerPlate.Core;
-using CoreWebApiBoilerPlate.Models;
+using CoreWebApiBoilerPlate.DataLayer.Repository.Interfaces;
 using IdentityModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
