@@ -4,7 +4,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 # CoreWebApi-BoilerPlate
-A [.net core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) based template with pre-cofigured useful libraries like swagger, jwt, automapper, etc.
+Built on [.NET Core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0), this template follows a [n-layered architecture](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier) and includes pre-configured libraries like Swagger, JWT, and AutoMapper, among others. It's a reliable starting point for developers seeking to create strong and adaptable applications, offering a simplified development experience.
 
 ## 📋 Table of Contents 
 * [Getting Started](#-getting-started)
