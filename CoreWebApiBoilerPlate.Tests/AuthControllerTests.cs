@@ -17,11 +17,11 @@ namespace CoreWebApiBoilerPlate.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            var testSetup = new TestSetup();
+            //var testSetup = new TestSetup();
             mockConfig = new Mock<IConfiguration>();
             mockMapper = new Mock<IMapper>();
             authController = new AuthController(
-                new RepositoryWrapper(testSetup.Context),
+                new RepositoryWrapper(TestSetup.Context),
                 mockConfig.Object,
                 mockMapper.Object);
         }

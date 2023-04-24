@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using Castle.Core.Configuration;
-using CoreWebApiBoilerPlate.Controllers;
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 
 namespace CoreWebApiBoilerPlate.Tests
 {
@@ -20,12 +11,15 @@ namespace CoreWebApiBoilerPlate.Tests
     }
 
 
- 
+
+    [SetUpFixture]
     public class TestSetup
     {
-        public TestContext Context { get; private set; }
+        public static TestContext Context { get; private set; }
 
-        public TestSetup()
+
+        [OneTimeSetUp]
+        public void TestSetupInit()
         {
             var options = new DbContextOptionsBuilder<DefaultDBContext>()
                 .UseInMemoryDatabase(databaseName: "test_database")
@@ -77,8 +71,9 @@ namespace CoreWebApiBoilerPlate.Tests
         }
 
 
-     
-        ~TestSetup()
+
+        [OneTimeTearDown]
+        public void ClearDB()
         {
             Context.Database.EnsureDeleted();
             Context.Dispose();
