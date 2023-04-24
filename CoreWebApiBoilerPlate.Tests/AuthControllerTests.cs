@@ -32,7 +32,7 @@ namespace CoreWebApiBoilerPlate.Tests
             // Arrange
             var loginModel = new LoginRequestModel { UserName = "johnDoe", Password = "password123" };
 
-            mockConfig.Setup(config => config["JWT:Key"]).Returns("VOR4mh4t3GmrZL0lJSfb");
+            mockConfig.Setup(config => config["JWT:Key"]).Returns(TestSetup.JWT_KEY);
 
             // Act
             var result = await authController.Login(loginModel) as ObjectResult;

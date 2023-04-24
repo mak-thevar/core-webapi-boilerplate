@@ -16,7 +16,7 @@ namespace CoreWebApiBoilerPlate.Tests
     public class TestSetup
     {
         public static TestContext Context { get; private set; }
-
+        public static string JWT_KEY => "VOR4mh4t3GmrZL0lJSfb";
 
         [OneTimeSetUp]
         public void TestSetupInit()
