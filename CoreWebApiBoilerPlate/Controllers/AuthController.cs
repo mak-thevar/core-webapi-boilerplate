@@ -26,9 +26,9 @@ namespace CoreWebApiBoilerPlate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequestModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginRequestModel loginModel)
         {
-            var hashedPass = EasyEncryption.MD5.ComputeMD5Hash(loginModel.Password);
+            var hashedPass = EasyEncryption.MD5.ComputeMD5Hash(loginModel?.Password);
             var user = await this.repository.UserRepository.GetQueryable().Include(o=>o.Role).SingleOrDefaultAsync(x => x.Username == loginModel.UserName && x.Password == hashedPass);
             
             if(user is null)

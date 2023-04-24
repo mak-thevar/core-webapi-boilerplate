@@ -1,0 +1,10 @@
+global using NUnit.Framework;
+global using CoreWebApiBoilerPlate.Controllers;
+global using CoreWebApiBoilerPlate.DataLayer.Context;
+global using CoreWebApiBoilerPlate.DataLayer.Repository.Interfaces;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using CoreWebApiBoilerPlate.DataLayer.Entities;
+global using CoreWebApiBoilerPlate.DataLayer.Repository.Impl;
+global using Moq;
