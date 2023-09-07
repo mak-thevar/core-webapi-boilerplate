@@ -40,12 +40,18 @@ namespace CoreWebApiBoilerPlate.DataLayer.Repository.Impl
             throw new KeyNotFoundException($"Object with id {id} not found in the database.");
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync(string? navigationsToInclude = null)
+        public async Task<IReadOnlyList<T>> GetAllAsync(params string[] navigationsToInclude)
         {
 
             IQueryable<T> query = dbSet;
-            if (navigationsToInclude is not null)
-                query = query.Include(navigationsToInclude);
+            if (navigationsToInclude is not null && navigationsToInclude.Length > 0)
+            {
+                foreach (var item in navigationsToInclude)
+                {
+                    query = query.Include(item);
+                }
+            }
+                
             var items = (await query.ToListAsync()).Where(x => x as IStatusEntity != null ? ((IStatusEntity)x).IsActive : 1 == 1);
             return items.ToList();
         }

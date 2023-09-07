@@ -30,9 +30,9 @@ namespace CoreWebApiBoilerPlate.Controllers
         {
             var hashedPass = EasyEncryption.MD5.ComputeMD5Hash(loginModel?.Password);
             var user = await this.repository.UserRepository.GetQueryable().Include(o=>o.Role).SingleOrDefaultAsync(x => x.Username == loginModel.UserName && x.Password == hashedPass);
-            
-            if(user is null)
-                return Unauthorized("Invalid Username or Password!");
+
+            if (user is null)
+                return CreateErrorResponse(System.Net.HttpStatusCode.Unauthorized, new() { "Invalid username or password!" });
 
 
             var token = JWT.GenerateToken(new Dictionary<string, string> { 

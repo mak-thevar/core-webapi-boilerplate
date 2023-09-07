@@ -32,7 +32,7 @@ namespace CoreWebApiBoilerPlate.Controllers
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<List<TodoResponseModel>>))]
         public async Task<IActionResult> Get()
         {
-            var result = await this.repository.TodoRepository.GetAllAsync("CreatedBy");
+            var result = await this.repository.TodoRepository.GetAllAsync("Comments", "CreatedBy");
             var response = mapper.Map<IReadOnlyList<TodoResponseModel>>(result);
             return CreateSuccessResponse(response);
         }
