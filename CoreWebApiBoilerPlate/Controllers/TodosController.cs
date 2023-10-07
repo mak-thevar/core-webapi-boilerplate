@@ -32,7 +32,7 @@ namespace CoreWebApiBoilerPlate.Controllers
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<List<TodoResponseModel>>))]
         public async Task<IActionResult> Get()
         {
-            var result = await this.repository.TodoRepository.GetAllAsync("Comments", "CreatedBy");
+            var result = await this.repository.TodoRepository.GetAllAsync("Comments", "CreatedBy","TodoStatus");
             var response = mapper.Map<IReadOnlyList<TodoResponseModel>>(result);
             return CreateSuccessResponse(response);
         }
@@ -96,6 +96,17 @@ namespace CoreWebApiBoilerPlate.Controllers
                 return CreateErrorResponse(System.Net.HttpStatusCode.BadRequest, new List<string> { $"Please check if the todo with id {id} exists." });
             }
 
+        }
+
+        [HttpPost("completed/{id}")]
+        public async Task<IActionResult> Completed(int id)
+        {
+            var result = await this.repository.TodoRepository.GetByIdAsync(id);
+            if (result is null)
+                return CreateErrorResponse(System.Net.HttpStatusCode.NotFound, new List<string> { "Not found"});
+            result.TodoStatusId = 3;
+            await this.repository.SaveAsync();
+            return CreateSuccessResponse(result);
         }
     }
 }

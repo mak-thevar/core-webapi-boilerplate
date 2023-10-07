@@ -31,7 +31,9 @@ namespace CoreWebApiBoilerPlate.Core
                 .ForMember(x => x.CreatedById, opt => opt.MapFrom(src => Constants.CurrentUserId))
                 .ForMember(x => x.IsActive, opt => opt.MapFrom(src => true));
 
-            CreateMap<Todo, TodoResponseModel>();
+            CreateMap<Todo, TodoResponseModel>()
+                .ForMember(x => x.TodoStatus, opt => opt.MapFrom(src => src.TodoStatus != null ? src.TodoStatus.Description : ""));
+
             CreateMap<Comment, CommentResponseModel>();
 
             CreateMap<CommentRequestModel, Comment>()
