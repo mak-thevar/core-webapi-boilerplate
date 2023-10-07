@@ -6,6 +6,9 @@
 # CoreWebApi-BoilerPlate
 Built on [.NET Core 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0), this template follows a [n-layered architecture](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier) and includes pre-configured libraries like Swagger, JWT, and AutoMapper, among others. It's a reliable starting point for developers seeking to create strong and adaptable applications, offering a simplified development experience.
 
+### 👩‍💻Are you in need of a frontend solution? 
+**You can access the frontend for this repository at the following link: [core-webapi-boilerplate-frontend](https://github.com/mak-thevar/core-webapi-boilerplate-frontend)**
+
 ## 📋 Table of Contents 
 * [Getting Started](#-getting-started)
 * [File Structure](#%EF%B8%8F-file-structure)
