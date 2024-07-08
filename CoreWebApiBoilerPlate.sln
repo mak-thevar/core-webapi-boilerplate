@@ -3,9 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate", "CoreWebApiBoilerPlate\CoreWebApiBoilerPlate.csproj", "{3F3A039A-51D6-4120-A8BA-D970B4B0DF69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.WebApi", "CoreWebApiBoilerPlate\CoreWebApiBoilerPlate.WebApi.csproj", "{3F3A039A-51D6-4120-A8BA-D970B4B0DF69}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C5DFB16B-257C-4A56-A3D8-4735001A9B0E} = {C5DFB16B-257C-4A56-A3D8-4735001A9B0E}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreWebApiBoilerPlate.Tests", "CoreWebApiBoilerPlate.Tests\CoreWebApiBoilerPlate.Tests.csproj", "{90FC8FE5-D343-4072-8D02-5A7A03025B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.Tests", "CoreWebApiBoilerPlate.Tests\CoreWebApiBoilerPlate.Tests.csproj", "{90FC8FE5-D343-4072-8D02-5A7A03025B39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.Application", "CoreWebApiBoilerPlate.Application\CoreWebApiBoilerPlate.Application.csproj", "{37D5C49C-D89C-43CC-AEBC-359B546E3D44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.Domain", "CoreWebApiBoilerPlate.Domain\CoreWebApiBoilerPlate.Domain.csproj", "{1A197A72-8455-4805-8A22-A8737C174457}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.DAL", "CoreWebApiBoilerPlate.DAL\CoreWebApiBoilerPlate.DAL.csproj", "{3B2E8EAC-1DE5-4A93-923D-4D5000B01A74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.Common", "CoreWebApiBoilerPlate.Common\CoreWebApiBoilerPlate.Common.csproj", "{C5DFB16B-257C-4A56-A3D8-4735001A9B0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWebApiBoilerPlate.API", "CoreWebApiBoilerPlate.API\CoreWebApiBoilerPlate.API.csproj", "{67191C20-5390-4DCE-BC14-5E5E59B1E522}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5BFF224D-8F9A-4FFC-B810-017530D8DB74}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +39,26 @@ Global
 		{90FC8FE5-D343-4072-8D02-5A7A03025B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90FC8FE5-D343-4072-8D02-5A7A03025B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90FC8FE5-D343-4072-8D02-5A7A03025B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D5C49C-D89C-43CC-AEBC-359B546E3D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D5C49C-D89C-43CC-AEBC-359B546E3D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D5C49C-D89C-43CC-AEBC-359B546E3D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D5C49C-D89C-43CC-AEBC-359B546E3D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A197A72-8455-4805-8A22-A8737C174457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A197A72-8455-4805-8A22-A8737C174457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A197A72-8455-4805-8A22-A8737C174457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A197A72-8455-4805-8A22-A8737C174457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2E8EAC-1DE5-4A93-923D-4D5000B01A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2E8EAC-1DE5-4A93-923D-4D5000B01A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2E8EAC-1DE5-4A93-923D-4D5000B01A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2E8EAC-1DE5-4A93-923D-4D5000B01A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5DFB16B-257C-4A56-A3D8-4735001A9B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5DFB16B-257C-4A56-A3D8-4735001A9B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5DFB16B-257C-4A56-A3D8-4735001A9B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5DFB16B-257C-4A56-A3D8-4735001A9B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67191C20-5390-4DCE-BC14-5E5E59B1E522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67191C20-5390-4DCE-BC14-5E5E59B1E522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67191C20-5390-4DCE-BC14-5E5E59B1E522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67191C20-5390-4DCE-BC14-5E5E59B1E522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

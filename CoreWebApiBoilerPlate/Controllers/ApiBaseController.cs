@@ -1,79 +1,87 @@
-﻿using CoreWebApiBoilerPlate.BusinessLogicLayer.DTO;
+﻿using CoreWebApiBoilerPlate.Application.DTO;
 using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
-namespace CoreWebApiBoilerPlate.Controllers
+namespace CoreWebApiBoilerPlate.WebApi.Controllers
 {
     public abstract class ApiBaseController : Controller
     {
-
+        // Property for current user info
+        protected CurrentUserInfo CurrentUser { get; private set; } = new CurrentUserInfo();
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            // Retrieve user information if authenticated
             if (User.Identity.IsAuthenticated)
             {
-                var currentUserId = User.Claims.Where(x => x.Type == JwtClaimTypes.Id).SingleOrDefault()?.Value;
-                var currentUserName = User.Claims.Where(x => x.Type == JwtClaimTypes.PreferredUserName).SingleOrDefault()?.Value;
-                var currentRoleId = User.Claims.Where(x => x.Type == "RoleId").SingleOrDefault()?.Value;
-                if (currentUserId is null || currentUserName is null)
-                    throw new UnauthorizedAccessException();
+                CurrentUser = ExtractCurrentUserInfo();
 
-                Constants.CurrentUserId = Convert.ToInt32(currentUserId);
-                Constants.CurrentUserName = currentUserName;
-                Constants.CurrentRoleId = Convert.ToInt32(currentRoleId);
-
+                if (CurrentUser.UserId == null || CurrentUser.UserName == null)
+                {
+                    context.Result = CreateErrorResponse(HttpStatusCode.Unauthorized, new List<string> { "Unauthorized access." });
+                    return;
+                }
             }
+
+            // Validate ModelState and return a formatted error response
             if (!ModelState.IsValid)
             {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
 
-                var errors = new List<string>();
-
-                foreach (var item in ModelState)
-                {
-                    if (item.Value.Errors.Any())
-                    {
-                        var key = item.Key;
-                        foreach (var er in item.Value.Errors)
-                        {
-                            errors.Add($"{key} : {er.ErrorMessage}");
-                        }
-                    }
-                }
                 context.Result = CreateErrorResponse(HttpStatusCode.BadRequest, errors);
             }
         }
 
+        // Method to extract user information from JWT claims
+        private CurrentUserInfo ExtractCurrentUserInfo()
+        {
+            var currentUserId = User.Claims.SingleOrDefault(x => x.Type == JwtClaimTypes.Id)?.Value;
+            var currentUserName = User.Claims.SingleOrDefault(x => x.Type == JwtClaimTypes.PreferredUserName)?.Value;
+            var currentRoleId = User.Claims.SingleOrDefault(x => x.Type == "RoleId")?.Value;
+
+            return new CurrentUserInfo
+            {
+                UserId = currentUserId != null ? Convert.ToInt32(currentUserId) : (int?)null,
+                UserName = currentUserName,
+                RoleId = currentRoleId != null ? Convert.ToInt32(currentRoleId) : (int?)null
+            };
+        }
+
+        // Generic success response
         protected IActionResult CreateSuccessResponse<T>(T value, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
-            var respModel = new ApiResponseModel<T>
-            {
-                Result = value,
-                Succeeded = true,
-                StatusCode = statusCode
-            };
-            return StatusCode((int)statusCode, respModel);
+            var responseModel = new ApiResponseModel<T>(true, value, new List<string>(), statusCode);
+            return StatusCode((int)statusCode, responseModel);
         }
 
-        protected IActionResult CreateErrorResponse(HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest, List<string>? errors = default)
+        // Generic error response
+        protected IActionResult CreateErrorResponse(HttpStatusCode statusCode = HttpStatusCode.BadRequest, IEnumerable<string>? errors = null)
         {
-            var respModel = new ApiResponseModel<string>
-            {
-                Result = string.Empty,
-                Succeeded = false,
-                StatusCode = httpStatusCode,
-                Errors = errors
-            };
-
-            return StatusCode((int)httpStatusCode, respModel);
+            var responseModel = new ApiResponseModel<string>(false, string.Empty, errors ?? new List<string>(), statusCode);
+            return StatusCode((int)statusCode, responseModel);
         }
 
-
+        // Specific "Not Found" response
         protected IActionResult DataNotFound(string customMessage = "")
         {
-            var errMessage = string.IsNullOrEmpty(customMessage) ? "The resource that you are looking for is either null or empty." : customMessage;
-            return CreateErrorResponse(HttpStatusCode.NotFound, new List<string> { errMessage });
+            var errorMessage = string.IsNullOrEmpty(customMessage)
+                ? "The resource that you are looking for is either null or empty."
+                : customMessage;
+
+            return CreateErrorResponse(HttpStatusCode.NotFound, new List<string> { errorMessage });
+        }
+
+        // Class to encapsulate current user information
+        protected class CurrentUserInfo
+        {
+            public int? UserId { get; set; }
+            public string? UserName { get; set; }
+            public int? RoleId { get; set; }
         }
     }
 }

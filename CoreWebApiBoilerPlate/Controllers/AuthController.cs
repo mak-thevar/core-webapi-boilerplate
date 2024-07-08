@@ -1,61 +1,33 @@
 ﻿using AutoMapper;
-using CoreWebApiBoilerPlate.BusinessLogicLayer.DTO;
-using CoreWebApiBoilerPlate.Core;
-using CoreWebApiBoilerPlate.DataLayer.Repository.Interfaces;
+using CoreWebApiBoilerPlate.Application.DTO;
+using CoreWebApiBoilerPlate.Application.DTO.Request;
+using CoreWebApiBoilerPlate.Application.Services.Interfaces;
+using CoreWebApiBoilerPlate.WebApi.DataAccessLayer.Repository.Interfaces;
+using CoreWebApiBoilerPlate.WebApi.Infrastructure;
 using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
-namespace CoreWebApiBoilerPlate.Controllers
+namespace CoreWebApiBoilerPlate.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ApiBaseController
     {
-        private readonly IRepositoryWrapper repository;
-        private readonly IConfiguration configuration;
-        private readonly IMapper mapper;
+        private readonly IAuthService authService;
 
-        public AuthController(IRepositoryWrapper repository, IConfiguration configuration, IMapper mapper)
+        public AuthController(IAuthService authService)
         {
-            this.repository = repository;
-            this.configuration = configuration;
-            this.mapper = mapper;
+            this.authService = authService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginRequestModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginModel)
         {
-            var hashedPass = EasyEncryption.MD5.ComputeMD5Hash(loginModel?.Password);
-            var user = await this.repository.UserRepository.GetQueryable().Include(o=>o.Role).SingleOrDefaultAsync(x => x.Username == loginModel.UserName && x.Password == hashedPass);
-
-            if (user is null)
-                return CreateErrorResponse(System.Net.HttpStatusCode.Unauthorized, new() { "Invalid username or password!" });
-
-
-            var token = JWT.GenerateToken(new Dictionary<string, string> { 
-                { ClaimTypes.Role, user.Role.Description  },
-                { "RoleId", user.Role.Id.ToString()  },
-                {JwtClaimTypes.PreferredUserName, user.Name },
-                { JwtClaimTypes.Id, user.Id.ToString() },
-                { JwtClaimTypes.Email, user.EmailId}
-            },configuration["JWT:Key"]);
-
-            var userResp = mapper.Map<UserResponseModel>(user);
-            return CreateSuccessResponse(new { AuthToken = token, UserData =  userResp});
+            var result = await authService.Login(loginModel);
+            return CreateSuccessResponse(result);
         }
-    }
-
-    public class LoginRequestModel
-    {
-        [Required]
-        [StringLength(100, MinimumLength =3)]
-        public string UserName { get; set; } = null!;
-
-        [Required]
-        [StringLength(100)]
-        public string Password { get; set; } = null!;
     }
 }

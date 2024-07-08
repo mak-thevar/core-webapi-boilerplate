@@ -1,4 +1,7 @@
 using AutoMapper;
+using CoreWebApiBoilerPlate.Application.DTO.Request;
+using CoreWebApiBoilerPlate.Application.Services.Interfaces;
+using CoreWebApiBoilerPlate.WebApi.Controllers;
 using Microsoft.Extensions.Configuration;
 
 
@@ -11,6 +14,7 @@ namespace CoreWebApiBoilerPlate.Tests
     {
         private Mock<IConfiguration> mockConfig;
         private Mock<IMapper> mockMapper;
+        private Mock<IAuthService> mockAuthService;
         private AuthController authController;
         
 
@@ -20,17 +24,15 @@ namespace CoreWebApiBoilerPlate.Tests
             //var testSetup = new TestSetup();
             mockConfig = new Mock<IConfiguration>();
             mockMapper = new Mock<IMapper>();
-            authController = new AuthController(
-                new RepositoryWrapper(TestSetup.Context),
-                mockConfig.Object,
-                mockMapper.Object);
+            mockAuthService = new Mock<IAuthService>();
+            authController = new AuthController(mockAuthService.Object);
         }
 
         [Test]
         public async Task Login_With_Valid_Credentials_Returns_Token_And_UserData()
         {
             // Arrange
-            var loginModel = new LoginRequestModel { UserName = "johnDoe", Password = "password123" };
+            var loginModel = new LoginRequestDTO { UserName = "johnDoe", Password = "password123" };
 
             mockConfig.Setup(config => config["JWT:Key"]).Returns(TestSetup.JWT_KEY);
 
@@ -46,7 +48,7 @@ namespace CoreWebApiBoilerPlate.Tests
         public async Task Login_With_Invalid_Credentials_Returns_Unauthorized()
         {
             // Arrange
-            var loginModel = new LoginRequestModel { UserName = "janeDoe", Password = "wrongPassword" };
+            var loginModel = new LoginRequestDTO { UserName = "janeDoe", Password = "wrongPassword" };
             //mockRepo.Setup(repo => repo.UserRepository.GetQueryable().SingleOrDefaultAsync(default)).ReturnsAsync(default(User));
 
             // Act

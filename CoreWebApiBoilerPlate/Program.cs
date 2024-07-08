@@ -1,6 +1,4 @@
-using CoreWebApiBoilerPlate.Core;
-using CoreWebApiBoilerPlate.DataLayer.Context;
-using Microsoft.EntityFrameworkCore;
+using CoreWebApiBoilerPlate.WebApi.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,15 +23,6 @@ builder.Host.UseSerilog((context, services, config) =>
     config.WriteTo.Console();
 });
 var app = builder.Build();
-
-//Auto Migration
-using (var serviceScope = app.Services.CreateScope())
-{
-    var service = serviceScope.ServiceProvider;
-    var dbContext = service.GetRequiredService<DefaultDBContext>();
-    await dbContext.Database.MigrateAsync();
-
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

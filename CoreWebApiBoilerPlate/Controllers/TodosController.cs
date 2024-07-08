@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using CoreWebApiBoilerPlate.BusinessLogicLayer.DTO;
-using CoreWebApiBoilerPlate.DataLayer.Entities;
-using CoreWebApiBoilerPlate.DataLayer.Repository.Interfaces;
+using CoreWebApiBoilerPlate.Application.DTO;
+using CoreWebApiBoilerPlate.Domain.Entities.Enums;
+using CoreWebApiBoilerPlate.WebApi.DataAccessLayer.Entities;
+using CoreWebApiBoilerPlate.WebApi.DataAccessLayer.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CoreWebApiBoilerPlate.Controllers
+namespace CoreWebApiBoilerPlate.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -32,7 +33,7 @@ namespace CoreWebApiBoilerPlate.Controllers
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<List<TodoResponseModel>>))]
         public async Task<IActionResult> Get()
         {
-            var result = await this.repository.TodoRepository.GetAllAsync("Comments", "CreatedBy","TodoStatus");
+            var result = await repository.TodoRepository.GetAllAsync("Comments", "CreatedBy", "TodoStatus");
             var response = mapper.Map<IReadOnlyList<TodoResponseModel>>(result);
             return CreateSuccessResponse(response);
         }
@@ -42,7 +43,7 @@ namespace CoreWebApiBoilerPlate.Controllers
         [ProducesResponseType(200, Type = typeof(ApiResponseModel<TodoResponseModel>))]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await this.repository.TodoRepository.GetByIdAsync(id, "CreatedBy,Comments,Comments.CreatedBy");
+            var result = await repository.TodoRepository.GetByIdAsync(id, "CreatedBy,Comments,Comments.CreatedBy");
             if (result is null)
                 return DataNotFound();
             return CreateSuccessResponse(result);
@@ -54,9 +55,8 @@ namespace CoreWebApiBoilerPlate.Controllers
         public async Task<IActionResult> Post([FromBody] TodoRequestModel model)
         {
             var todo = mapper.Map<Todo>(model);
-            todo.TodoStatusId = (await this.repository.TodoRepository.GetDefaultStatusByName("todo")).Value;
-            var result = await this.repository.TodoRepository.AddAsync(todo);
-            await this.repository.SaveAsync();
+            var result = await repository.TodoRepository.AddAsync(todo);
+            await repository.SaveAsync();
             return CreateSuccessResponse(result);
         }
 
@@ -66,8 +66,8 @@ namespace CoreWebApiBoilerPlate.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] TodoRequestModel model)
         {
 
-            var result = await this.repository.TodoRepository.UpdateAsync(id, model);
-            await this.repository.SaveAsync();
+            var result = await repository.TodoRepository.UpdateAsync(id, model);
+            await repository.SaveAsync();
             return CreateSuccessResponse(result);
         }
 
@@ -75,14 +75,14 @@ namespace CoreWebApiBoilerPlate.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await this.repository.TodoRepository.DeleteAsync(id);
-            if(result)
+            var result = await repository.TodoRepository.DeleteAsync(id);
+            if (result)
                 return CreateSuccessResponse($"Todo with id : {id} deleted successfully.");
             return CreateErrorResponse(System.Net.HttpStatusCode.NotFound, new List<string> { "Error while deleting." });
         }
 
         [HttpPost("{id}/comment")]
-        public async Task<IActionResult> AddComment(int id,CommentRequestModel requestModel)
+        public async Task<IActionResult> AddComment(int id, CommentRequestDTO requestModel)
         {
             var comment = mapper.Map<Comment>(requestModel);
             try
@@ -101,11 +101,11 @@ namespace CoreWebApiBoilerPlate.Controllers
         [HttpPost("completed/{id}")]
         public async Task<IActionResult> Completed(int id)
         {
-            var result = await this.repository.TodoRepository.GetByIdAsync(id);
+            var result = await repository.TodoRepository.GetByIdAsync(id);
             if (result is null)
-                return CreateErrorResponse(System.Net.HttpStatusCode.NotFound, new List<string> { "Not found"});
-            result.TodoStatusId = 3;
-            await this.repository.SaveAsync();
+                return CreateErrorResponse(System.Net.HttpStatusCode.NotFound, new List<string> { "Not found" });
+            result.Status = TodoStatusEnum.Completed;
+            await repository.SaveAsync();
             return CreateSuccessResponse(result);
         }
     }

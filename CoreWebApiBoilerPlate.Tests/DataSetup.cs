@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using CoreWebApiBoilerPlate.WebApi.DataAccessLayer.Context;
+using CoreWebApiBoilerPlate.WebApi.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoreWebApiBoilerPlate.Tests
 {
@@ -38,7 +40,7 @@ namespace CoreWebApiBoilerPlate.Tests
                         Description = "Admin"
                     },
                     EmailId = "johnDoe@gmail.com",
-                    Password = EasyEncryption.MD5.ComputeMD5Hash("password123"),
+                    Password = new PasswordHasher<object>().HashPassword(null!, "password123"),
                     Username = "johnDoe"
                 },
                 new User
@@ -50,7 +52,7 @@ namespace CoreWebApiBoilerPlate.Tests
                         Description = "User"
                     },
                     EmailId = "janeDoe@gmail.com",
-                    Password = EasyEncryption.MD5.ComputeMD5Hash("password456"),
+                    Password = new PasswordHasher<object>().HashPassword(null!, "password456"),
                     Username = "janeDoe"
                 },
                 new User
@@ -62,7 +64,7 @@ namespace CoreWebApiBoilerPlate.Tests
                         Description = "User"
                     },
                     EmailId = "bobSmith@gmail.com",
-                    Password = EasyEncryption.MD5.ComputeMD5Hash("password789"),
+                    Password = new PasswordHasher<object>().HashPassword(null!, "password789"),
                     Username = "bobSmith"
                 }
             };

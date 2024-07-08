@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreWebApiBoilerPlate\CoreWebApiBoilerPlate.csproj" />
+    <ProjectReference Include="..\CoreWebApiBoilerPlate\CoreWebApiBoilerPlate.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
